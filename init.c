@@ -1,8 +1,4 @@
-#include <stdint.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "inc/tm4c123gh6pm.h"
-#include "driverlib/sysctl.h"
+#include "init.h"
 
 /**
  * @brief Initializes the UART0 peripheral for communication, it will be used to send data to PC.
