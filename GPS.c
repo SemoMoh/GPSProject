@@ -26,44 +26,238 @@ bool reached;
  * Function declration
  */
 
-
+////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
-* @brief Reads and parses a sentence in the RMC format.
-* Tokenizes the sentence using `strtok` with a comma as a delimiter.
-* Assigns tokenized values to variables based on their position in the sentence.
-*
-* @param sectence_RMC A character pointer to the RMC sentence to be parsed.
-*/
-void read_RMC(char*sectence_RMC) {
-    // split the string into tokens based on the delimiter
-    token = strtok(sectence_RMC, delim);
-    while (token != NULL) {
-        switch (i) {
-            case 1:
-                utc_time = token; // assign the second token to the global variable utc_time
-                break;
-            case 2:
-                status = token; // assign the third token to the global variable status
-                break;
-            case 3:
-                latitude = token; // assign the fourth token to the global variable latitude
-                break;
-            case 5:
-                longitude = token; // assign the sixth token to the global variable longitude
-                break;
-            case 7:
-                speed_over_ground = token; // assign the eighth token to the global variable speed_over_ground
-                break;
-            case 9:
-                date = token; // assign the tenth token to the global variable date
-                break;
+ * @brief Reads and parses GGA data from a GPS device.
+ *
+ * This function reads and parses GGA data from a GPS device. It tokenizes the `strGPS` string using the `strtok` function and then processes each field based on its position. 
+ * It extracts the time, latitude, longitude, fixation, and altitude from the GGA data and stores them in the corresponding variables.
+ *
+ * @param void
+ * @return void
+ */
+
+void readGGA(){
+    fieldCount = 0;
+    token = strtok(strGPS, ",");
+        while (token != NULL) {
+            switch (fieldCount) {
+                case 1://time
+                   // time = strcpy (token);
+                    break;
+
+                case 2: // latitude
+                    latitude = dd6m_TO_degree( atof( token ) );
+                    ////////////////////////////////////////temp
+                    i=0;
+                    while(*token != '\0'){
+                        latSTR[i++]= *token;
+                        token++;
+                    }
+                    latSTR[i]='\0';
+                    ////////////////////////////////////////end temp
+                    break;
+
+                case 3: // north/south
+                    if (*token == 'S') {
+                       latitude = -1*latitude;
+                    }
+                    break;
+
+                case 4: // longitude
+                    longitude = dd6m_TO_degree( atof( token ) );
+
+                    ////////////////////////////////////////temp
+                    i=0;
+                    while(*token != '\0'){
+                        lonSTR[i++]= *token;
+                        token++;
+                    }
+                    lonSTR[i]='\0';
+                    ////////////////////////////////////////end temp
+
+                    break;
+
+                case 5: // east/west
+                    if (*token == 'W') {
+                        longitude = -1*longitude;
+                    }
+                    break;
+
+                case 6: // fixation
+                    fix=atoi(token);
+                    break;
+
+                case 9: // altitude
+                    altitude = atof(token);
+                    break;
+
+            }
+            fieldCount++;
+            token = strtok(NULL, ",");
         }
-        i++; // increment the counter
-        token = strtok(NULL, delim); // get the next token
-    }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Reads and parses RMC data from a GPS device.
+ *
+ * This function reads and parses RMC data from a GPS device. It tokenizes the `strGPS` string using the `strtok` function and then processes each field based on its position. 
+ * It extracts the time, latitude, longitude and altitude from the RMC data and stores them in the corresponding variables.
+ *
+ * @param void
+ * @return void
+ */
+
+void readRMC(){
+    fieldCount = 0;
+    token = strtok(strGPS, ",");
+        while (token != NULL) {
+            switch (fieldCount) {
+                case 1://time
+                   // time = token;
+                    break;
+
+                case 3: // latitude
+                    latitude = dd6m_TO_degree( atof( token ) );
+                    ////////////////////////////////////////temp
+                    i=0;
+                    while(*token != '\0'){
+                        latSTR[i++]= *token;
+                        token++;
+                    }
+                    latSTR[i]='\0';
+                    ////////////////////////////////////////end temp
+                    break;
+
+                case 4: // north/south
+                    if (*token == 'S') {
+                       latitude = -1*latitude;
+                    }
+                    break;
+
+                case 5: // longitude
+                    longitude = dd6m_TO_degree( atof( token ) );
+                    ////////////////////////////////////////temp
+                    i=0;
+                    while(*token != '\0'){
+                        lonSTR[i++]= *token;
+                        token++;
+                    }
+                    lonSTR[i]='\0';
+                    ////////////////////////////////////////end temp
+                    break;
+
+
+                case 6: // east/west
+                    if (*token == 'W') {
+                        longitude = -1*longitude;
+                    }
+                    break;
+
+                case 2: // fixation
+                    k=atoi(token);
+                    switch (k){
+                        case 'A':
+                              fix = 1 ;
+                              break;
+                        case 'V':
+                              fix = 0 ;
+                              break;
+                    }
+                    break;
+
+                case 9: // altitude
+                    altitude = atof(token);
+                    break;
+
+            }
+            fieldCount++;
+            token = strtok(NULL, ",");
+        }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+extern int k; // variable used in readGLL and readRMC functions, it used in the fixation part
+
+/**
+ * @brief Reads and parses GLL data from a GPS device.
+ *
+ * This function reads and parses GLL data from a GPS device. It tokenizes the `strGPS` string using the `strtok` function and then processes each field based on its position. 
+ * It extracts the time, latitude, and longitude from the GLL data and stores them in the corresponding variables.
+ *
+ * @param void
+ * @return void
+ */
+
+void readGLL(){
+    fieldCount = 0;
+    token = strtok(strGPS, ",");
+        while (token != NULL) {
+            switch (fieldCount) {
+                case 5://time
+                //    time = token;
+                    break;
+
+                case 1: // latitude
+                    latitude = dd6m_TO_degree( atof( token ) );
+                    ////////////////////////////////////////temp
+                    i=0;
+                    while(*token != '\0'){
+                        latSTR[i++]= *token;
+                        token++;
+                    }
+                    latSTR[i]='\0';
+                    ////////////////////////////////////////end temp
+
+                    break;
+
+                case 2: // north/south
+                    if (*token == 'S') {
+                       latitude = -1*latitude;
+                    }
+                    break;
+
+                case 3: // longitude
+                    longitude = dd6m_TO_degree( atof( token ) );
+                    ////////////////////////////////////////temp
+                    i=0;
+                    while(*token != '\0'){
+                        lonSTR[i++]= *token;
+                        token++;
+                    }
+                    lonSTR[i]='\0';
+                    ////////////////////////////////////////end temp
+
+                    break;
+
+                case 4: // east/west
+                    if (*token == 'W') {
+                        longitude = -1*longitude;
+                    }
+                    break;
+
+                case 6: // fixation
+                    k= atoi(token);
+                    switch (k){
+                    case 'A':
+                        fix = 1 ;
+                        break;
+                    case 'V':
+                        fix = 0 ;
+                        break;
+                    }
+                    break;
+
+
+            }
+            fieldCount++;
+            token = strtok(NULL, ",");
+        }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Receives a single character using UART5.
@@ -139,7 +333,7 @@ double calcDistBetween ( double latComp , double lonComp ){
    return ( RADIUS_OF_EARTH * 2 * atan2( sqrt(a), sqrt(1-a)) );
 }
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Calculates the distance to the end point.
@@ -153,3 +347,33 @@ double calcDistToEnd(){
     return calcDistBetween( latEnd , lonEnd );
 }
 
+
+void calcDistAcc(){
+    if( latPre==0 && lonPre==0 ){ //start point
+        latPre=latitude;
+        lonPre=longitude;
+        return ;
+    }
+    totalDist += calcDistBetween (latPre,lonPre);
+    latPre=latitude;
+    lonPre=longitude;
+}
+
+
+void decisionLED(){
+    if(latitude == 0 && longitude == 0 ){
+        RGP_output(0x0E);
+        return;
+    }
+    double d=calcDistToEnd();
+    if(d < 2.5){ // green on
+        RGP_output(0x08);
+        reached = true;
+    }
+    else if(d < 7.5){ //yellow on
+        RGP_output(0x04);
+    }
+    else{ //red on
+        RGP_output(0x02);
+    }
+}
