@@ -18,6 +18,10 @@ extern char *date;
 char *token; // pointer to hold the current token
 char *delim = ","; // delimiter used to split the string
 int i = 0; // counter to keep track of the current token position
+double latPre; //previous latitude
+double lonPre; //previous longitude
+double totalDist;
+bool reached; 
 /**
  * Function declration
  */
@@ -110,4 +114,42 @@ void readGPSString(){
 }
 
 
+/**
+ * @brief Calculates the distance between two points on Earth.
+ *
+ * This function calculates the distance between two points on Earth given their latitudes and longitudes using the Haversine formula.
+ *
+ * @param latComp The latitude of the first point in degrees.
+ * @param lonComp The longitude of the first point in degrees.
+ * @return double The distance between the two points in meters.
+ */
+double calcDistBetween ( double latComp , double lonComp ){
+   // Convert latitudes and longitudes from degrees to radians
+   double latComp_rad = latComp * 3.14159265359 / 180.0;
+   double lonComp_rad = lonComp * 3.14159265359 / 180.0;
+   double latitude_rad = latitude * 3.14159265359 / 180.0;
+   double longitude_rad = longitude * 3.14159265359 / 180.0;
+
+   // Calculate differences in latitudes and longitudes
+   double d_lat = latitude_rad - latComp_rad;
+   double d_lon = longitude_rad - lonComp_rad;
+
+   // Calculate the distance using the Haversine formula
+   double a = sin(d_lat/2) * sin(d_lat/2) + cos(latComp_rad) * cos(latitude_rad) * sin(d_lon/2) * sin(d_lon/2);
+   return ( RADIUS_OF_EARTH * 2 * atan2( sqrt(a), sqrt(1-a)) );
+}
+
+
+
+/**
+ * @brief Calculates the distance to the end point.
+ *
+ * This function calculates the distance to the end point using the calcDistBetween function.
+ *
+ * @param void
+ * @return double The distance to the end point in meters.
+ */
+double calcDistToEnd(){
+    return calcDistBetween( latEnd , lonEnd );
+}
 
