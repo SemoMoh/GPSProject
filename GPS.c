@@ -424,8 +424,6 @@ double calcDistBetween ( double latComp , double lonComp ){
    return ( RADIUS_OF_EARTH * 2 * atan2( sqrt(a), sqrt(1-a)) );
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 /**
  * @brief Calculates the distance to the end point.
  *
