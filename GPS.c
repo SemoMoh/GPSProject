@@ -50,7 +50,6 @@ double dd6m_TO_degree(double dd6m){
     double _6m = (dd6m - dd * 100) / 60;
     return dd+_6m;
 }
-////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Checks if a string is a substring of another string.
@@ -61,8 +60,7 @@ double dd6m_TO_degree(double dd6m){
  * @param string The string to check for the substring in.
  * @return bool Returns true if `check` is a substring of `string`, false otherwise.
  */
-extern int i;
-// returns true if check is a substring of strign, and false otherwise
+int i;
 bool is_substring(char *check, char *string)
 {
   // get the length of both strings
@@ -103,8 +101,6 @@ bool is_substring(char *check, char *string)
   return false;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////
-
 /**
  * @brief Reads and parses GGA data from a GPS device.
  *
@@ -114,7 +110,6 @@ bool is_substring(char *check, char *string)
  * @param void
  * @return void
  */
-
 void readGGA(){
     fieldCount = 0;
     token = strtok(strGPS, ",");
@@ -176,7 +171,6 @@ void readGGA(){
         }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @brief Reads and parses RMC data from a GPS device.
  *
@@ -186,7 +180,6 @@ void readGGA(){
  * @param void
  * @return void
  */
-
 void readRMC(){
     fieldCount = 0;
     token = strtok(strGPS, ",");
@@ -255,9 +248,7 @@ void readRMC(){
         }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 extern int k; // variable used in readGLL and readRMC functions, it used in the fixation part
-
 /**
  * @brief Reads and parses GLL data from a GPS device.
  *
@@ -267,7 +258,6 @@ extern int k; // variable used in readGLL and readRMC functions, it used in the 
  * @param void
  * @return void
  */
-
 void readGLL(){
     fieldCount = 0;
     token = strtok(strGPS, ",");
@@ -334,8 +324,6 @@ void readGLL(){
         }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 char c1[] = "$GPGLL"; // define character array for NMEA sentence type GPGLL
 char c2[] = "$GPRMC"; // define character array for NMEA sentence type GPRMC
 char c3[] = "$GPGGA"; // define character array for NMEA sentence type GPGGA
@@ -363,8 +351,6 @@ void NMEA_Type(){
         }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 /**
  * @brief Receives a single character using UART5.
  *
@@ -377,7 +363,6 @@ void NMEA_Type(){
  * @param None
  * @return The received character or a null character if there are any errors.
  */
-
 uint8_t readGPSChar(){
     while (UART5_FR_R & (1<<4)){}; // Wait until the UART5 receive FIFO is not empty
     if((UART5_DR_R & 0xFFFFFF00) != 0){
