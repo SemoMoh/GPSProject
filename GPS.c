@@ -5,18 +5,26 @@
 /* 
  * Global variables used
  */
-char receivedChar;
-uint32_t strGPS_counter;
+extern char receivedChar;
+extern uint32_t strGPS_counter;
 extern char strGPS[];
-//global variables for function read_RMC
-extern char *utc_time;
-extern char *status;
-extern char *latitude;
-extern char *longitude;
-extern char *speed_over_ground;
-extern char *date;
-char *token; // pointer to hold the current token
-char *delim = ","; // delimiter used to split the string
+
+//end points
+extern double latEnd;
+extern double lonEnd;
+
+//global variables used for the next functions
+extern double longitude;
+extern double latitude;
+extern char latSTR[10];
+extern char lonSTR[10];
+extern double altitude;
+extern char time[10];
+extern double speed;
+extern int fix;
+extern char*token;
+extern int fieldCount;
+
 extern int i = 0; // counter to keep track of the current token position
 extern double latPre; //previous latitude
 extern double lonPre; //previous longitude
@@ -25,6 +33,75 @@ extern bool reached;
 /**
  * Function declration
  */
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Converts a DDMM.MMMM format value to a decimal degree value.
+ *
+ * This function converts a DDMM.MMMM format value to a decimal degree value. It calculates the degrees and minutes separately and then combines them to get the final result.
+ *
+ * @param dd6m The DDMM.MMMM format value to be converted.
+ * @return double The decimal degree value.
+ */
+
+double dd6m_TO_degree(double dd6m){
+    int dd= dd6m / 100 ;
+    double _6m = (dd6m - dd * 100) / 60;
+    return dd+_6m;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Checks if a string is a substring of another string.
+ *
+ * This function checks if the string `check` is a substring of the string `string`. It does this by checking each position in `string` for `check`.
+ *
+ * @param check The string to check if it is a substring.
+ * @param string The string to check for the substring in.
+ * @return bool Returns true if `check` is a substring of `string`, false otherwise.
+ */
+extern int i;
+// returns true if check is a substring of strign, and false otherwise
+bool is_substring(char *check, char *string)
+{
+  // get the length of both strings
+  int slen = strlen(string);
+  int clen = strlen(check);
+
+  // we can stop checking for check in string at the position it will no longer
+  // possibly fit into the string
+  int end = slen - clen + 1;
+
+  // check each position in string for check
+  int i = 0;
+  for (i = 0; i < end; i++)
+  {
+    // assume the check string is found at this position
+    bool check_found = true;
+
+    // check each index of the check string to see if it matches with the
+    // corresponding character in string at index i onwards
+    int j = 0;
+    for ( j = 0; j < clen; j++)
+    {
+      // if we find a non-matching character, we know that check is not
+      // found here and we can stop checking now
+      if (check[j] != string[i + j])
+      {
+        check_found = false;
+        break;
+      }
+    }
+
+    // if we found no non-matching characters, we found that check IS a
+    // substring of string (at position i) and we can stop checking
+    if (check_found) return true;
+  }
+
+  // if at no position in string did we find check it is NOT a substring
+  return false;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -258,6 +335,35 @@ void readGLL(){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+char c1[] = "$GPGLL"; // define character array for NMEA sentence type GPGLL
+char c2[] = "$GPRMC"; // define character array for NMEA sentence type GPRMC
+char c3[] = "$GPGGA"; // define character array for NMEA sentence type GPGGA
+
+/**
+ * @brief Checks if certain NMEA sentence types (GPGLL, GPRMC, GPGGA) are substrings of strGPS
+ * and calls the appropriate function (readGLL, readRMC, readGGA) to read the data.
+ * 
+ * @param void
+ * @return void
+ */
+void NMEA_Type(){
+        // check if c1 is a substring of s1, report the results
+        if (is_substring(c1,strGPS)) // check if GPGLL is a substring of strGPS
+         {
+           readGLL(); // call function to read GPGLL data
+         }
+        else if (is_substring(c2,strGPS)) // check if GPRMC is a substring of strGPS
+         {
+           readRMC(); // call function to read GPRMC data
+         }
+        else if(is_substring(c3,strGPS)) // check if GPGGA is a substring of strGPS
+        {
+           readGGA(); // call function to read GPGGA data
+        }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Receives a single character using UART5.
