@@ -1,4 +1,7 @@
 #include "tivaConfig.h"
+
+#include <string.h>
+#include <math.h>
 /**
  * Global Variables
  */
