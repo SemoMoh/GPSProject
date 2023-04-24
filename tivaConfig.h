@@ -8,7 +8,7 @@
 #include "inc/tm4c123gh6pm.h"
 #include "driverlib/sysctl.h"
 
-#include "UART_init.h"
+#include "init.h"
 #include "Putty.h"
 
 #endif /* TIVACONFIG_H_ */
