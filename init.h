@@ -1,10 +1,3 @@
-/*
- * UART_init.h
- *
- *  Created on: 19 Apr 2023
- *      Author: eslam
- */
-
 #ifndef INIT_H_
 #define INIT_H_
 
