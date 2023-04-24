@@ -25,7 +25,6 @@ extern int fix;
 extern char*token;
 extern int fieldCount;
 
-extern int i = 0; // counter to keep track of the current token position
 extern double latPre; //previous latitude
 extern double lonPre; //previous longitude
 extern double totalDist;
@@ -60,7 +59,7 @@ double dd6m_TO_degree(double dd6m){
  * @param string The string to check for the substring in.
  * @return bool Returns true if `check` is a substring of `string`, false otherwise.
  */
-int i;
+int i;     // counter to keep track of the current token position
 bool is_substring(char *check, char *string)
 {
   // get the length of both strings
@@ -101,6 +100,7 @@ bool is_substring(char *check, char *string)
   return false;
 }
 
+int k; // variable used in readGLL and readRMC functions, it used in the fixation part
 /**
  * @brief Reads and parses GGA data from a GPS device.
  *
@@ -248,7 +248,6 @@ void readRMC(){
         }
 }
 
-extern int k; // variable used in readGLL and readRMC functions, it used in the fixation part
 /**
  * @brief Reads and parses GLL data from a GPS device.
  *
