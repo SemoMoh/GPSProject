@@ -1,3 +1,4 @@
+#include GPIO.h
 /**
  * @brief Reads the input from switch 1 (PF4).
  *
