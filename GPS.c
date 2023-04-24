@@ -17,11 +17,11 @@ extern char *speed_over_ground;
 extern char *date;
 char *token; // pointer to hold the current token
 char *delim = ","; // delimiter used to split the string
-int i = 0; // counter to keep track of the current token position
-double latPre; //previous latitude
-double lonPre; //previous longitude
-double totalDist;
-bool reached; 
+extern int i = 0; // counter to keep track of the current token position
+extern double latPre; //previous latitude
+extern double lonPre; //previous longitude
+extern double totalDist;
+extern bool reached; 
 /**
  * Function declration
  */
