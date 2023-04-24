@@ -32,8 +32,7 @@ uint32_t strGPS_counter;
 
 int main(){
     // Set the clocking to run directly from the internal oscillator at 16 MHz
-    SysCtlClockSet(SYSCTL_SYSDIV_1 | SYSCTL_USE_OSC | SYSCTL_OSC_INT | SYSCTL_MAIN_OSC_DIS);
-
+    setCLkFreq(16);
     Putty_init(); // Initialize UART0
     GPS_init(); // Initialize UART5
     GPIO_PFinit(); //Initiallize switch and LEDs
