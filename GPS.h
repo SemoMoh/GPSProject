@@ -12,6 +12,7 @@
 
 uint8_t readGPSChar();
 void readGPSString();
-
+double calcDistBetween ( double latComp , double lonComp );
+double calcDistToEnd();
 
 #endif /* GPS_H_ */
