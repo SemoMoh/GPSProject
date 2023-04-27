@@ -434,19 +434,39 @@ double calcDistToEnd(){
     return calcDistBetween( latEnd , lonEnd );
 }
 
-
+/**
+ * @brief Calculates the accumulated distance.
+ *
+ * This function calculates the accumulated distance by adding the distance between the current point and the previous point to the total distance. 
+ * If this is the first point, it sets the previous latitude and longitude to the current values and returns.
+ *
+ * @param void
+ * @return void
+ */
 void calcDistAcc(){
-    if( latPre==0 && lonPre==0 ){ //start point
+   // Check if this is the first point  
+  if( latPre==0 && lonPre==0 ){  // Set the previous latitude and longitude to the current values
         latPre=latitude;
         lonPre=longitude;
         return ;
     }
+    // Add the distance between the current point and the previous point to the total distance
     totalDist += calcDistBetween (latPre,lonPre);
+    // Update the previous latitude and longitude to the current values
     latPre=latitude;
     lonPre=longitude;
 }
 
-
+/**
+ * @brief Determines which LED to turn on based on the distance to the end point.
+ *
+ * This function determines which LED to turn on based on the distance to the end point. If the latitude and longitude are both 0, it turns on all LEDs and returns. 
+ * Otherwise, it calculates the distance to the end point using the calcDistToEnd function. If the distance is less than 2.5 meters, it turns on the green LED and sets reached to true. 
+ * If the distance is less than 7.5 meters but greater than or equal to 2.5 meters, it turns on the yellow LED. Otherwise, it turns on the red LED.
+ *
+ * @param void
+ * @return void
+ */
 void decisionLED(){
     if(latitude == 0 && longitude == 0 ){
         RGP_output(0x0E);
@@ -464,3 +484,4 @@ void decisionLED(){
         RGP_output(0x02);
     }
 }
+
