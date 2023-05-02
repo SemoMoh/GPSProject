@@ -23,7 +23,6 @@ void LCD_Clear(void);                               //Clear the screen
 void LCD_ClearChar(char row, char col);             //Clear specific character from position (row, col)
 void LCD_PrintLn(char row, char *s);                //Print specific line from beginning of row
 void LCD_PrintByPos(char row, char col, char *s);   //Print specific line from position (row, col)
-void LCD_PrintJustify(char i, char *s, char *d);    //Print specific line with 2 texts indented by x
 void LCD_Cursor(char row, char col);                //Set cursor
 void DelaySec(double s);                            //Delay by (s) seconds / e.g (s=1) -> 1 second
 void LCD_Menu();                                    //Menu1: Print gate 2, gate 3 , gate 4
