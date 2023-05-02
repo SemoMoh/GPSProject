@@ -153,10 +153,8 @@ void LCD_Cursor(char row, char col){
 }
 
 void LCD_Clear(void){
-
         LCD_Command(0x01);
         SysCtlDelay(10);
-
 }
 
 void LCD_PrintLn(char row, char *s) {
