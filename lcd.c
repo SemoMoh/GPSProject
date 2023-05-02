@@ -8,15 +8,10 @@
 #include "driverlib/gpio.h"
 #include "string.h"
 
+// Global Variables
 char globalArray[10];
-extern double latitude;
-extern double longitude;
-extern double latEnd;
-extern double lonEnd;
-extern double fix;
-extern double totalDist;
 
-
+// Functions
 void SW_init(){
     SYSCTL_RCGCGPIO_R |= 0x00000020; // 1) F clock
     while((SYSCTL_PRGPIO_R & 0x20) == 0); // delay
