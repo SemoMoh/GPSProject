@@ -29,22 +29,18 @@ void SW_init(){
 bool sw1_input(void){
   switch(GPIO_PORTF_DATA_R & 0x10){
     case 0x10:
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4, 0x00);
-        return true;                       // 1 for not pushed
+      return 1;                       // 1 for not pushed
     default:
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4, 0x00);
-        return false;                       // 0 for pushed
+      return 0;                       // 0 for pushed
   }
 }
 
 bool sw2_input(void){
     switch(GPIO_PORTF_DATA_R & 0x01){
     case 0x01:
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4, 0x00);
-        return true;                       // 1 for not pushed
+      return 1;                       // 1 for not pushed
     default:
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_0 | GPIO_PIN_4, 0x00);
-        return false;                       // 0 for pushed
+      return 0;                       // 0 for pushed
   }
 }
 
@@ -156,16 +152,12 @@ void LCD_Cursor(char row, char col){
 
 }
 
-
-
 void LCD_Clear(void){
 
         LCD_Command(0x01);
         SysCtlDelay(10);
 
 }
-
-
 
 void LCD_PrintLn(char row, char *s) {
     LCD_Cursor(row, 0);
@@ -198,7 +190,6 @@ void DelaySec(double s){
     SysCtlDelay(s* (16000000/3));
 }
 
-
 void LCD_Menu(){
     LCD_Clear();
     LCD_PrintByPos(0,0,"Choose Destination:");
@@ -216,7 +207,7 @@ void LCD_Menu(){
 void LCD_setTargetDestination(int x)
 {
     if (x==1)
-    {/*Gate 2 */
+    {   /*Gate 2 */
         latEnd=30.0646014;
         lonEnd=31.2773738;
         LCD_PrintByPos(1,0,"lat: 30.0646014"); // print latitude
@@ -233,8 +224,7 @@ void LCD_setTargetDestination(int x)
         DelaySec(2);
     }
     else if (x==2)
-    {    /*Gate 3*/
-
+    {   /*Gate 3*/
         latEnd=30.063907;
         lonEnd=31.2776239;
         LCD_PrintByPos(1,0,"lat: 30.063907"); // print latitude
@@ -251,31 +241,31 @@ void LCD_setTargetDestination(int x)
         DelaySec(2);
     }
     else
-    {/*Gate 6*/
+    {   /*Gate 6*/
         latEnd=30.0648797;
         lonEnd=31.2805086;
         LCD_PrintByPos(1,0,"lat: 30.0648797"); // print latitude
         LCD_PrintByPos(2,0,"long: 31.2805086"); // print longitude
         LCD_PrintByPos(3,0,"Status: Starting..."); // print status
-        while(fix == 0) // flag = fix;
+        while(fix == 0) // flag for succesful gps connection
         {
             readGPSString();
             NMEA_Type();
             doubleToString(fix);
             printString(globalArray);
         }
+        LCD_ClearChar(3,18);
         LCD_PrintByPos(3,0,"Status: Connected.");
         DelaySec(2);
     }
 }
-
 
 void LCD_ReadDestination(){
     bool flag = true;
     uint8_t i = 1;
     uint8_t p = 1;
     while(flag){
-        // read input
+        // read switch input
         if(!sw1_input() && sw2_input()){
             LCD_ClearChar(p,0);
             LCD_Cursor(i, 0); // move 1 row
@@ -314,20 +304,6 @@ void LCD_ReadDestination(){
 
     DelaySec(2);
 }
-
-
-
-void print_Current_Position()
-{
-    LCD_PrintByPos(0,0,"lat:");   // start from 0
-    doubleToString(latitude);
-    LCD_PrintByPos(0,4,globalArray);//123.123456
-
-    //LCD_PrintByPos(1,,"long:");   // start from 5
-    doubleToString(longitude);
-    LCD_PrintByPos(1,6,globalArray);//123.123456
-}
-
 
 void LCD_ReadDistance(){
     LCD_Clear();
