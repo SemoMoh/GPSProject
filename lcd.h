@@ -25,8 +25,12 @@ void LCD_PrintLn(char row, char *s);                //Print specific line from b
 void LCD_PrintByPos(char row, char col, char *s);   //Print specific line from position (row, col)
 void LCD_PrintJustify(char i, char *s, char *d);    //Print specific line with 2 texts indented by x
 void LCD_Cursor(char row, char col);                //Set cursor
-void DelaySec(double s);                          //Delay by (s) seconds / e.g (s=1) -> 1 second
-void LCD_Menu();                                    //Print gate 2, gate 3 , gate 4
-void LCD_ReadDestination();                         //Read switch input and choose specific gate
+void DelaySec(double s);                            //Delay by (s) seconds / e.g (s=1) -> 1 second
+void LCD_Menu();                                    //Menu1: Print gate 2, gate 3 , gate 4
+void LCD_ReadDestination();                         //Menu2: Take input from user to pick a specific gate and show details
+void LCD_setTargetDestination(int x);               //Menu2: Show target details and waiting state for gps to start fetching
+void LCD_ReadDistance();                            //Menu3: Print distance details 
+void LCD_UpdateDistance();                          //Menu3: Update values of distance
+void LCD_TargetReached();                           //Menu4: Success state and target reached                                
 
 #endif /* LCD_H_ */
