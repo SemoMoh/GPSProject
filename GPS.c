@@ -469,19 +469,19 @@ void calcDistAcc(){
  */
 void decisionLED(){
     if(latitude == 0 && longitude == 0 ){
-        RGP_output(0x0E);
+        RGB_output(0x0E);
         return;
     }
     double d=calcDistToEnd();
     if(d < 2.5){ // green on
-        RGP_output(0x08);
+        RGB_output(0x08);
         reached = true;
     }
     else if(d < 7.5){ //yellow on
-        RGP_output(0x04);
+        RGB_output(0x04);
     }
     else{ //red on
-        RGP_output(0x02);
+        RGB_output(0x02);
     }
 }
 
