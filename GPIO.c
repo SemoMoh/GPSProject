@@ -45,7 +45,7 @@ bool sw2_input(void){
  * @param data The data to be output to the RGB LEDs.
  * @return void
  */
-void RGP_output(unsigned char data){
+void RGB_output(unsigned char data){
   GPIO_PORTF_DATA_R &= ~0x0E;         // reset RGP LEDs
   if (data !=0){
     GPIO_PORTF_DATA_R |= data;        // needed LEDs are on
