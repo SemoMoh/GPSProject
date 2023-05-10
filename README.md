@@ -31,17 +31,21 @@ The trajectory of the distance traveled should satisfy the following criteria:
 
 ## How to Use
 
-To use the MiniGPS Tracking System, you need to follow these steps:
+##### To use the MiniGPS Tracking System, you have two ways:
 
-1. Connect the TM4C123G LaunchPad to a GPS module and configure it to receive GPS coordinates.
-2. Select the desired destination from the list of available destinations displayed on the LCD screen.
-3. Navigate through the destinations using the buttons on the Tiva C LaunchPad.
-4. Observe the visual feedback provided by the built-in LEDs:
-   - Red LED: The target destination is far away by more than 5 meters.
-   - Yellow LED: The target destination is about to be reached (less than 5 meters away).
-   - Green LED: The target destination is reached.
-5. Track your distance traveled and receive visual feedback using the built-in LEDs.
+##### 1. Using CCS: (RECOMMENDED)
+- Download the zip file.
+- Extract the file.
+- Open the project using CCS.
+- Make sure to configure the properties probebly in CCS.
+- Uplode the project into your tiva c 123 GH6PM microcontroller.
 
+##### 2. Using the source codes:
+ -  Download the source files.
+ -  Download the required libraries (the names located in CONFIG.h file).
+ -  Add a startup file into your project file.
+ - Uplode the project into your tiva c 123 GH6PM microcontroller.
+ 
 ## Tools Used
 <div style="display: flex; align-items: center;">
   <img src="https://www.ti.com/diagrams/ccstudio_ccs_256.jpg" alt="CCS" title="CCS" width="70" height="70">
@@ -67,46 +71,14 @@ To use the MiniGPS Tracking System, you need to follow these steps:
 This Team project is part of the requiremtents of "Introduction to Embedded Systems" course.
 
 
-## Contributers
+## Team members
+- Abdelrahman Ahmed    2001722
+- Eslam Moahmed           2000252
+- Mohamed Ahmed         2001171
+- Omar Muhammed        2001277
+- Karim Ibrahim 2001118
+- Mohamed Ayman 2001171
+- Abdelrahman Elsayed 2002139
+- Karim Michail 2000318
 
-
-## Real-time Trial Video
-
-Here is a link to the real-time trial video of the MiniGPS Tracking System:
-
-[insert link to video here]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Pictures of the project:
