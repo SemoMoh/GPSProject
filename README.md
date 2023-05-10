@@ -72,7 +72,7 @@ This Team project is part of the requiremtents of "Introduction to Embedded Syst
 
 
 ## Team members
-- Abdelrahman Ahmed    2001722
+- Abdelrahman Ahmed    2001722 (Team Leader)
 - Eslam Moahmed           2000252
 - Mohamed Ahmed         2001171
 - Omar Muhammed        2001277
