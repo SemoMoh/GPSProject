@@ -77,8 +77,8 @@ This Team project is part of the requiremtents of "Introduction to Embedded Syst
 - Mohamed Ahmed         2001171
 - Omar Muhammed        2001277
 - Karim Ibrahim 2001118
-- Mohamed Ayman 2001171
+- Mohamed Ayman 2001048
 - Abdelrahman Elsayed 2002139
-- Karim Michail 2000318
+- Karim Mikhai 2000318
 
 ## Pictures of the project:
