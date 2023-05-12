@@ -87,7 +87,7 @@ This Team project is part of the requiremtents of "Introduction to Embedded Syst
 <div align="center">
     <a href="https://ibb.co/FJrGGzQ"><img src="https://i.ibb.co/tcGyyD0/photo-2023-05-11-23-52-43.jpg" alt="Photo 5" height="400"></a>
     <br>
-    <sup style="font-size: 24px;">This is screen to choose your destination from</sup>
+    <sup style="font-size: 24px;">This is the screen to choose your destination from</sup>
     <br>
     <br>
 </div>
@@ -96,7 +96,7 @@ This Team project is part of the requiremtents of "Introduction to Embedded Syst
 <div align="center">
     <a href="https://ibb.co/3B0hXmT"><img src="https://i.ibb.co/KF9yZx5/Screenshot-20230512-000221-Gallery.jpg" alt="Photo 2" height="400"></a>
     <br>
-    <sup style="font-size: 50px;">The walking desitance on Google Maps is 150m</sup>
+    <sup style="font-size: 50px;">The walking distance on Google Maps is 150m</sup>
     <br>
     <br>
 </div>
@@ -104,7 +104,7 @@ This Team project is part of the requiremtents of "Introduction to Embedded Syst
 <div align="center">
     <a href="https://ibb.co/tLnNdTZ"><img src="https://i.ibb.co/7kBT9dg/photo-2023-05-11-23-53-11.jpg" alt="Photo 4" height="400"></a>
     <br>
-    <sup style="font-size: 24px;">The Screen displaying the total distance moved when reaching the destination </sup>
+    <sup style="font-size: 24px;">The screen displaying the total distance moved when reaching the destination </sup>
     <br>
     <br>
 </div>
