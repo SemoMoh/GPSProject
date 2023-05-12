@@ -2,11 +2,7 @@
 
 The MiniGPS Tracking System is a sophisticated project that enables users to track their distance between two locations based on GPS coordinates using the TM4C123G LaunchPad. In addition, the system provides visual cues to the user through built-in LEDs, indicating their proximity to the desired destination or when they have arrived. Users can choose from a list of available destinations to track their progress, and the project includes an LCD screen to display trajectory information.
 
-## Real-time Trial Video
-
-Here is a link to the real-time trial video of the MiniGPS Tracking System:
-
-[insert link to video here]
+## [Real-time Trial Video ](https://drive.google.com/drive/folders/1YXf-va0ZnjTJy2UpYV1EcbIatx0w5YI7?usp=sharing "Real-time trial ")
 
 
 ## Features
