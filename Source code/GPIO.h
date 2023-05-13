@@ -12,6 +12,8 @@
 
 // Function prototypes
 void GPIO_PF_init(void); // Initializes GPIO pins for switch inputs and RGB output
+bool sw1_input(void); // Reads the state of switch 1
+bool sw2_input(void); // Reads the state of switch 2
 void RGB_output(unsigned char data); // Sets the colour of the RGB LED based on the input data
 
 
