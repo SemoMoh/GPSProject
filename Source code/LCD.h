@@ -14,4 +14,5 @@
 // Function prototypes
 void LCD_Menu(); //Print gate 2, gate 3 , gate 4
 void LCD_ReadDestination(); //Read switch input and choose specific gate 
-void LCD_UpdateDistance(); // Update the distance on the LCD ----------> Abdo twin
+void LCD_UpdateDistance(); // Update the distance on the LCD 
+
