@@ -159,7 +159,6 @@ void LCD_Show(unsigned char d) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-
 /**
  * @brief Clears the LCD display.
  *
@@ -168,6 +167,69 @@ void LCD_Show(unsigned char d) {
 void LCD_Clear(void) {
     LCD_Command(0x01); // Clear the display
     SysCtlDelay(10); // Delay
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Prints a string on a specified row of the LCD display.
+ *
+ * @param row The row on which to print the string.
+ * @param s The string to print on the LCD display.
+ *
+ * This function prints a string on a specified row of the LCD display by
+ * setting the cursor position and calling the LCD_Show function for each
+ * character in the string.
+ */
+void LCD_PrintLn(char row, char *s) {
+    LCD_Cursor(row, 0); // Set the cursor to the specified row and first column
+    int i;
+    for (i = 0; i < strlen(s); i++) {
+        if (s[i] == '\0') {
+            break;
+        }
+        LCD_Show(s[i]); // Display the character
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Prints a string at a specified position on the LCD display.
+ *
+ * @param row The row on which to print the string (0 to 3).
+ * @param col The column at which to start printing the string (0 to 19).
+ * @param s The string to print on the LCD display.
+ *
+ * This function prints a string at a specified position on the LCD display by
+ * setting the cursor position and calling the LCD_Show function for each
+ * character in the string.
+ */
+void LCD_PrintLnByPos(char row, char col, char *s) {
+    LCD_Cursor(row, col); // Set the cursor to the specified row and column
+    int i;
+    for (i = 0; i < strlen(s); i++) {
+        if (s[i] == '\0') {
+            break;
+        }
+        LCD_Show(s[i]); // Display the character
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * @brief Clears a character at a specified position on the LCD display.
+ *
+ * @param row The row of the character to clear.
+ * @param col The column of the character to clear.
+ *
+ * This function clears a character at a specified position on the LCD display by
+ * setting the cursor position and displaying a space character.
+ */
+void LCD_ClearChar(char row, char col) {
+    LCD_Cursor(row, col); // Set the cursor to the specified row and column
+    LCD_Show(' '); // Display a space character
+    LCD_Cursor(row, col); // Set the cursor back to the specified row and column
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -184,6 +246,34 @@ void DelaySec(double s) {
     SysCtlDelay(s * (16000000 / 3));
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Sets the cursor position on the LCD display.
+ *
+ * @param row The row of the cursor position.
+ * @param col The column of the cursor position.
+ *
+ * This function sets the cursor position on the LCD display by sending the
+ * appropriate command to the LCD display based on the row and column arguments.
+ */
+void LCD_Cursor(char row, char col) {
+    switch (row) {
+        case 0:
+            LCD_Command(ROW1 + (col % 16)); // Set cursor to first row
+            break;
+        case 1:
+            LCD_Command(ROW2 + (col % 16)); // Set cursor to second row
+            break;
+        case 2:
+            LCD_Command(ROW3 + (col % 16)); // Set cursor to third row
+            break;
+        case 3:
+            LCD_Command(ROW4 + (col % 16)); // Set cursor to fourth row
+            break;
+        default:
+            LCD_Command(ROW4 + (col % 16)); // Set cursor to fourth row by default
+    }
+}
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /**
