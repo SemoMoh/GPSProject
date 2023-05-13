@@ -53,5 +53,9 @@ void LCD_UpdateDistance(); // Update the dstance on the LCD
 void LCD_setTargetDestination(int x); // Set the target destination
 void LCD_ReadDistance(); // Print the distance on the LCD
 void LCD_TargetReachedMenu(); // Display a message on the LCD when the target is reached
-
-
+void startMenu(); // Display the start menu on the LCD
+void targetReached(); // Called when the target is reached
+void trip(); // Function to be called during a trip
+void nearReached(); // Function to be called when near the target destination
+void doubleToString(double value); // Convert a double value to a string
+#endif /* LCD_H_ */
