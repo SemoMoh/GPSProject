@@ -98,7 +98,7 @@ This Team project is part of the requiremtents of "Introduction to Embedded Syst
 </div>
 
 <div align="center">
-    <a href="https://ibb.co/tLnNdTZ"><img src="https://i.ibb.co/7kBT9dg/photo-2023-05-11-23-53-11.jpg" alt="Photo 4" height="400"></a>
+   <a href="https://ibb.co/ZcjBdYx"><img src="https://i.ibb.co/zPMXs7Z/image.png" alt="Photo 4" height="400"></a>
     <br>
     <sup style="font-size: 24px;">The screen displaying the total distance moved when reaching the destination </sup>
     <br>
