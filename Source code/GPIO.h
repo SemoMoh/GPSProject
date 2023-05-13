@@ -10,9 +10,9 @@
 #include "driverlib/sysctl.h"
 
 
-
-
-
+// Function prototypes
+void GPIO_PF_init(void); // Initializes GPIO pins for switch inputs and RGB output
+void RGB_output(unsigned char data); // Sets the colour of the RGB LED based on the input data
 
 
 
