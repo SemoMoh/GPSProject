@@ -1,5 +1,10 @@
 #include "LCD.h"
 
+// Global variables
+bool nearReachedFlag = false; // Flag used to indicate that the message has been displayed.
+bool startMenuFlag = false;   // flag to know if the the start menu is used or not
+char globalArray[10]; // Global array of characters, used to convert a number into a string
+
 // Functions
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -385,4 +390,140 @@ void LCD_TargetReachedMenu() {
     calcDistAcc(); // Calculate the distance moved
     doubleToString(totalDist);
     LCD_PrintLnByPos(2, 10, globalArray); // Print the total distance moved
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// decision functions
+
+/**
+ * @brief Displays the start menu on the LCD display.
+ *
+ * This function displays the start menu on the LCD display by printing a welcome
+ * message, calling the LCD_DestinationMenu function to display the menu, and calling various
+ * functions to read GPS data and update the LCD display. The function also sets
+ * a flag to indicate that the start menu has been displayed.
+ */
+void startMenu() {
+    LCD_PrintLn(0, "Welcome to miniGPS."); // Print welcome message
+    DelaySec(2);
+    LCD_DestinationMenu(); // Display menu
+
+    // Get data from GPS
+    readGPSString();
+    NMEA_Type();
+    decisionLED();
+
+    LCD_ReadDestination(); // Read destination from user input
+    startMenuFlag = true;
+    LCD_ReadDistance(); // Display distances
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Displays a message on the LCD display when the target destination is reached.
+ *
+ * This function displays a message on the LCD display when the target destination is
+ * reached by calling various functions to update the LCD display and entering an
+ * infinite loop to prevent further execution.
+ */
+void targetReached() {
+    decisionLED();
+    LCD_TargetReachedMenu(); // Display target reached message
+    while (1) {}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Updates the distance information during a trip.
+ *
+ * This function updates the distance information during a trip by calling various
+ * functions to read GPS data, update the LCD display, and control an LED based on
+ * the distance to the target destination.
+ */
+bool fixFlag = false;
+void trip() {
+    // Get new data from GPS
+    readGPSString();
+    NMEA_Type();
+    decisionLED();
+
+    while(fix == 0 || latitude > 40 || latitude < 20 || longitude >40 || longitude < 20){
+        LCD_Clear();
+        LCD_PrintLn(1,"  !! No signal !!");
+        readGPSString();
+        NMEA_Type();
+        decisionLED();
+         if(latitude > 20 && latitude < 40 && longitude >20 && longitude < 40){
+             LCD_Clear();
+             LCD_ReadDistance(); // Display distances
+             if(nearReachedFlag == true){
+                 LCD_PrintLn(3, "Your target is near."); // Print message
+                 DelaySec(2);
+             }
+         }
+    }
+    LCD_UpdateDistance(); // Update the displayed distances
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Displays a message on the LCD display when near the target destination.
+ *
+ * This function displays a message on the LCD display when near the target destination
+ * by calling various functions to update the distance information and checking a flag
+ * to determine whether to display the message. The function sets a flag to indicate
+ * that the message has been displayed.
+ */
+void nearReached() {
+    trip();
+    if (nearReachedFlag == false) {
+        LCD_PrintLn(3, "Your target is near."); // Print message
+        LCD_PrintLn(2, "                   ");
+        DelaySec(2);
+        nearReachedFlag = true;
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Converts a double value to a string and stores it in the globalArray.
+ * @param value The double value to be converted.
+ * @return void
+ */
+void doubleToString(double value) {
+    int integerPart = (int)value; // Get the integer part of the value
+    double decimalPart = value - integerPart; // Get the decimal part of the value
+    int index = 0;
+    int k = 0;
+
+    // Convert the integer part to string
+    while (integerPart > 0) {
+        globalArray[index++] = '0' + integerPart % 10;
+        integerPart /= 10;
+    }
+
+    // Reverse the string
+    for (k = 0; k < (index / 2); k++) {
+        char temp = globalArray[k];
+        globalArray[k] = globalArray[index - k - 1];
+        globalArray[index - k - 1] = temp;
+    }
+
+    // Add the decimal point
+    globalArray[index++] = '.';
+
+    // Convert the decimal part to string
+    for (k = 0; k < 3; k++) {
+        decimalPart *= 10;
+        int digit = (int)decimalPart;
+        globalArray[index++] = '0' + digit;
+        decimalPart -= digit;
+    }
+
+    // Add the null terminator
+    globalArray[index] = '\0';
 }
