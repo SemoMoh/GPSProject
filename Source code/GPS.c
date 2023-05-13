@@ -5,11 +5,27 @@ char receivedChar; // Character received from GPS
 uint32_t strGPS_counter; // Counter for GPS string 
 char strGPS[80]; // GPS string 
 
+double preLatitude; // Previous latitude value  
+double preLongitude; // Previous longitude value 
+
+double latPre; // Previous latitude value for distance calculation 
+double lonPre; // Previous longitude value for distance calculation 
+double totalDist; // Total distance traveled 
+
+bool reached; // Flag indicating if target destination has been reached 
+
+double tempDist; // Temporary distance variable 
+
 char *direction ; // Direction to target destination string 
 double prevLat, prevLong; // Previous latitude and longitude values for direction calculation 
 double dotPdt,theta,crossPdt; // Variables for vector calculations 
 double vecDirctLat, vecDirctLong, vecLatToEnd, vecLongToEnd; // Vector variables for direction calculation 
 bool DirctFlag = false; // Flag indicating if it is the first reading or not 
+
+// End points
+double latEnd; // Target destination latitude value 
+double lonEnd; // Target destination longitude value 
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //Functions
@@ -158,6 +174,115 @@ void readRMC(){
             fieldCount++;
             token = strtok(NULL, ",");  // Get the next token
         }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Calculates the distance between two points on Earth.
+ *
+ * This function calculates the distance between two points on Earth given their latitudes and longitudes using the Haversine formula.
+ *
+ * @param latComp The latitude of the first point in degrees.
+ * @param lonComp The longitude of the first point in degrees.
+ * @return double The distance between the two points in meters.
+ */
+double calcDistBetween ( double latComp , double lonComp ){
+   // Convert latitudes and longitudes from degrees to radians
+   double latComp_rad = latComp * 3.14159265359 / 180.0;
+   double lonComp_rad = lonComp * 3.14159265359 / 180.0;
+   double latitude_rad = latitude * 3.14159265359 / 180.0;
+   double longitude_rad = longitude * 3.14159265359 / 180.0;
+
+   // Calculate differences in latitudes and longitudes
+   double d_lat = latitude_rad - latComp_rad;
+   double d_lon = longitude_rad - lonComp_rad;
+
+   // Calculate the distance using the Haversine formula
+   double a = sin(d_lat/2) * sin(d_lat/2) + cos(latComp_rad) * cos(latitude_rad) * sin(d_lon/2) * sin(d_lon/2);
+   return ( RADIUS_OF_EARTH * 2 * atan2( sqrt(a), sqrt(1-a)) );
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Calculates the distance to the end point.
+ *
+ * This function calculates the distance to the end point using the calcDistBetween function.
+ *
+ * @param void
+ * @return double The distance to the end point in meters.
+ */
+double calcDistToEnd(){
+    return calcDistBetween( latEnd , lonEnd );
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Calculates the accumulated distance.
+ *
+ * This function calculates the accumulated distance by adding the distance between the current point and the previous point to the total distance.
+ * If this is the first point, it sets the previous latitude and longitude to the current values and returns.
+ *
+ * @param void
+ * @return void
+ */
+void calcDistAcc(){
+    // Check if this is the first point
+    if( latPre==0 || lonPre==0 ){
+        // Set the previous latitude and longitude to the current values
+        latPre=latitude;
+        lonPre=longitude;
+        return ;
+    }
+    if(fix == 0){
+        return;
+    }
+
+    tempDist=calcDistBetween(latPre,lonPre);
+    if(tempDist<4){
+        return ;
+    }
+    // Add the distance between the current point and the previous point to the total distance
+    totalDist += tempDist;
+    // Update the previous latitude and longitude to the current values
+    latPre=latitude;
+    lonPre=longitude;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Determines which LED to turn on based on the distance to the end point.
+ *
+ * This function determines which LED to turn on based on the distance to the end point. If the latitude and longitude are both 0, it turns on all LEDs and returns.
+ * Otherwise, it calculates the distance to the end point using the calcDistToEnd function. If the distance is less than 6 meters, it turns on the green LED and sets reached to true.
+ * If the distance is less than 6 meters but greater than or equal to 11 meters, it turns on the yellow LED. Otherwise, it turns on the red LED.
+ *
+ * @param void
+ * @return void
+ */
+void decisionLED(){
+    if(latitude == 0 && longitude == 0 ){
+        RGB_output(0x0E);
+        return;
+    }
+    if(fix == 0){
+        RGB_output(0x0E);
+        return;
+    }
+    double d=calcDistToEnd();
+    if(d < 6){ // green on
+        RGB_output(0x08);
+        reached = true;
+    }
+    else if(d < 11){ //yellow on
+        RGB_output(0x0A);
+    }
+    else{ //red on
+        RGB_output(0x02);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
