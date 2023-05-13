@@ -1,15 +1,5 @@
 #include "LCD.h"
 
-// Global Variables
-extern int fix; // Fixation value (defined in another file) 
-extern double latEnd; // Target destination latitude value (defined in another file)
-extern double lonEnd; // Target destination longitude value (defined in another file)
-extern double longitude; // Longitude value (defined in another file)
-extern double latitude; // Latitude value (defined in another file)
-extern double totalDist; // Total distance travelled (defined in another file)
-extern char *direction ; // Direction to target destination string
-extern int fix; // Fixation value (defined in another file) 
-
 // Functions
 
 //////////////////////////////////////////////////////////////////////////////////////////
