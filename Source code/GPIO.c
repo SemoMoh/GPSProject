@@ -1,1 +1,51 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * @brief Reads the input from switch 1 (PF4).
+ *
+ * This function reads the input from switch 1 (PF4) and returns 1 if the switch is not pushed and 0 if it is pushed.
+ *
+ * @param void
+ * @return bool Returns 1 if the switch is not pushed and 0 if it is pushed.
+ */
+bool sw1_input(void){
+  switch(GPIO_PORTF_DATA_R & 0x10){
+    case 0x10:
+      return 1;                       // 1 for not pushed
+    default:
+      return 0;                       // 0 for pushed
+  }
+}
+
+
+/**
+ * @brief Reads the input from switch 0 (PF0).
+ *
+ * This function reads the input from switch 2 (PF0) and returns 1 if the switch is not pushed and 0 if it is pushed.
+ *
+ * @param void
+ * @return unsigned char Returns 1 if the switch is not pushed and 0 if it is pushed.
+ */
+bool sw2_input(void){
+    switch(GPIO_PORTF_DATA_R & 0x01){
+    case 0x01:
+      return 1;                       // 1 for not pushed
+    default:
+      return 0;                       // 0 for pushed
+  }
+}
+
