@@ -43,9 +43,10 @@ void LCD_init(void); // Initializes the LCD module
 void LCD_Command(unsigned char c); // Sends a command to the LCD module
 void LCD_Show(unsigned char d); // Shows a character on the LCD module
 void LCD_Clear(void); // Clears the screen of the LCD module
-
-
-
+void LCD_ClearChar(char row, char col); // Clears a specific character from a specific position on the LCD module 
+void LCD_PrintLn(char row, char *s); // Prints a string on a specific row of the LCD module 
+void LCD_PrintLnByPos(char row, char col, char *s); //Print specific line from position (row, col) 
+void LCD_Cursor(char row, char col); //Set cursor 
 void DelaySec(double s); //Delay by (s) seconds / e.g (s=1) -> 1 second
 void LCD_DestinationMenu(); //Print gate 2, gate 3 , gate 4 
 void LCD_ReadDestination(); //Read switch input and choose specific gate  
