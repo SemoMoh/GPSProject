@@ -29,5 +29,10 @@ void decisionLED(); // Determines which LED to light up based on the distance to
 void showDirct(); // Displays the direction of travel on the LCD 
 double absolute(double lat, double lg); //calculate the absolute of a vector 
 
-
+double dd6m_TO_degree(double dd6m); // Converts a coordinate in ddmm.mmmmm format to decimal degrees 
+bool is_substring(char *check, char *string); // Checks if a string is a substring of another string 
+void readGGA(); // Reads the GGA NMEA sentence and extracts latitude, longitude, and altitude data 
+void readGLL(); // Reads the GLL NMEA sentence and extracts latitude and longitude data 
+void readRMC(); // Reads the RMC NMEA sentence and extracts latitude, longitude, speed, and course data 
+void NMEA_Type(); // Determines the type of NMEA sentence being read 
 #endif /* GPS_H_ */
