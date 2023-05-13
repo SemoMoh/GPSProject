@@ -3,9 +3,169 @@
 // Global Variables
 extern int fix; // Fixation value (defined in another file) 
 // Functions
+
 //////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @brief Initializes the LCD display.
+ *
+ * This function enables the LCD peripheral, sets the GPIO pins as outputs,
+ * and sends a series of commands to initialize the LCD display.
+ */
+void LCD_init() {
+    // Enable the LCD peripheral
+    SysCtlPeripheralEnable(LCDPORTENABLE);
+    // Set the LCD pins as output
+    GPIOPinTypeGPIOOutput(LCDPORT, 0xFF);
 
+    // Delay
+    SysCtlDelay(50000);
+
+    // Set the RS pin to low
+    GPIOPinWrite(LCDPORT, RS, 0x00);
+
+    // Write 0x30 to the data pins
+    GPIOPinWrite(LCDPORT, D4 | D5 | D6 | D7, 0x30);
+    // Send data to LCD
+    GPIOPinWrite(LCDPORT, E, 0x02);
+    SysCtlDelay(10);
+    GPIOPinWrite(LCDPORT, E, 0x00);
+
+    // Delay
+    SysCtlDelay(50000);
+
+    // Write 0x30 to the data pins
+    GPIOPinWrite(LCDPORT, D4 | D5 | D6 | D7, 0x30);
+    // Send data to LCD
+    GPIOPinWrite(LCDPORT, E, 0x02);
+    SysCtlDelay(10);
+    GPIOPinWrite(LCDPORT, E, 0x00);
+
+    // Delay
+    SysCtlDelay(50000);
+
+    // Write 0x30 to the data pins
+    GPIOPinWrite(LCDPORT, D4 | D5 | D6 | D7, 0x30);
+    // Send data to LCD
+    GPIOPinWrite(LCDPORT, E, 0x02);
+    SysCtlDelay(10);
+    GPIOPinWrite(LCDPORT, E, 0x00);
+
+    // Delay
+    SysCtlDelay(50000);
+
+    // Write 0x20 to the data pins
+    GPIOPinWrite(LCDPORT, D4 | D5 | D6 | D7, 0x20);
+    // Send data to LCD
+    GPIOPinWrite(LCDPORT, E, 0x02);
+    SysCtlDelay(10);
+    GPIOPinWrite(LCDPORT, E, 0x00);
+
+    // Delay
+    SysCtlDelay(50000);
+
+    LCD_Command(0x0F); // Turn on Lcd
+    LCD_Clear(); // Clear screen
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Sends a command's to the LCD display.
+ *
+ * @param c The command's hexadecimal value to send to the LCD display.
+ *
+ * This function sends a command to the LCD display by setting the appropriate
+ * GPIO pins and using delays to ensure proper timing.
+ */
+void LCD_Command(unsigned char c) {
+    // Write the upper nibble of the command to the data pins
+    GPIOPinWrite(LCDPORT, D4 | D5 | D6 | D7, (c & 0xf0));
+    // Set the RS pin to low
+    GPIOPinWrite(LCDPORT, RS, 0x00);
+    // Send data to LCD
+    GPIOPinWrite(LCDPORT, E, 0x02);
+
+    // Delay
+    SysCtlDelay(50000);
+
+    // Set the enable pin to low
+    GPIOPinWrite(LCDPORT, E, 0x00);
+
+    // Delay
+    SysCtlDelay(50000);
+
+    // Write the lower nibble of the command to the data pins
+    GPIOPinWrite(LCDPORT, D4 | D5 | D6 | D7, (c & 0x0f) << 4);
+    // Set the RS pin to low
+    GPIOPinWrite(LCDPORT, RS, 0x00);
+    // Send data to LCD
+    GPIOPinWrite(LCDPORT, E, 0x02);
+
+    // Delay
+    SysCtlDelay(10);
+
+    // Set the enable pin to low
+    GPIOPinWrite(LCDPORT, E, 0x00);
+
+    // Delay
+    SysCtlDelay(50000);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Displays a character on the LCD display.
+ *
+ * @param d The character to display on the LCD display.
+ *
+ * This function displays a character on the LCD display by setting the appropriate
+ * GPIO pins and using delays to ensure proper timing.
+ */
+void LCD_Show(unsigned char d) {
+    // Write the upper nibble of the data to the data pins
+    GPIOPinWrite(LCDPORT, D4 | D5 | D6 | D7, (d & 0xf0));
+    // Set the RS pin to high
+    GPIOPinWrite(LCDPORT, RS, 0x01);
+    // Send data to LCD
+    GPIOPinWrite(LCDPORT, E, 0x02);
+
+    // Delay
+    SysCtlDelay(10);
+    // Set the enable pin to low
+    GPIOPinWrite(LCDPORT, E, 0x00);
+
+    // Delay
+    SysCtlDelay(50000);
+
+    // Write the lower nibble of the data to the data pins
+    GPIOPinWrite(LCDPORT, D4 | D5 | D6 | D7, (d & 0x0f) << 4);
+    // Set the RS pin to high
+    GPIOPinWrite(LCDPORT, RS, 0x01);
+    // Send data to LCD
+    GPIOPinWrite(LCDPORT, E, 0x02);
+
+    // Delay
+    SysCtlDelay(10);
+
+     // Set the enable pin to low
+     GPIOPinWrite(LCDPORT,E ,0x00);
+
+     // Delay
+     SysCtlDelay(50000);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Clears the LCD display.
+ *
+ * This function clears the LCD display
+ */
+void LCD_Clear(void) {
+    LCD_Command(0x01); // Clear the display
+    SysCtlDelay(10); // Delay
+}
 
 
 
