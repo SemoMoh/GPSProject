@@ -167,7 +167,19 @@ void LCD_Clear(void) {
     SysCtlDelay(10); // Delay
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @brief Delays execution for a specified number of seconds.
+ *
+ * @param s The number of seconds to delay execution.
+ *
+ * This function delays execution for a specified number of seconds by calling
+ * the SysCtlDelay function with an appropriate argument.
+ */
+void DelaySec(double s) {
+    SysCtlDelay(s * (16000000 / 3));
+}
 
 
 
