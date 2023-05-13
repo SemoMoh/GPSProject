@@ -1,6 +1,8 @@
 #ifndef LCD_H_
 #define LCD_H_
 
+
+
 // Include necessary header files
 #include "inc/tm4c123gh6pm.h"
 #include <stdint.h>
@@ -11,6 +13,15 @@
 #include "driverlib/gpio.h"
 #include <string.h>
 #include "GPS.h"
+
+// Global Variables
+extern int fix; // Fixation value (defined in another file) 
+extern double latEnd; // Target destination latitude value (defined in another file)
+extern double lonEnd; // Target destination longitude value (defined in another file)
+extern double longitude; // Longitude value (defined in another file)
+extern double latitude; // Latitude value (defined in another file)
+extern double totalDist; // Total distance travelled (defined in another file)
+extern char *direction ; // Direction to target destination string
 
 // Define constants 
 #define LCDPORT GPIO_PORTB_BASE // Port used for LCD
