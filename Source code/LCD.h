@@ -43,14 +43,13 @@ void LCD_init(void); // Initializes the LCD module
 void LCD_Command(unsigned char c); // Sends a command to the LCD module
 void LCD_Show(unsigned char d); // Shows a character on the LCD module
 void LCD_Clear(void); // Clears the screen of the LCD module
-void LCD_DestinationMenu(); //Print gate 2, gate 3 , gate 4 
-void LCD_ReadDestination(); //Read switch input and choose specific gate  
+
+
 
 void DelaySec(double s); //Delay by (s) seconds / e.g (s=1) -> 1 second
+void LCD_DestinationMenu(); //Print gate 2, gate 3 , gate 4 
+void LCD_ReadDestination(); //Read switch input and choose specific gate  
 void LCD_UpdateDistance(); // Update the dstance on the LCD 
-void LCD_Menu(); //Print gate 2, gate 3 , gate 4
-void LCD_ReadDestination(); //Read switch input and choose specific gate 
-void LCD_UpdateDistance(); // Update the distance on the LCD 
 void LCD_setTargetDestination(int x); // Set the target destination
 void LCD_ReadDistance(); // Print the distance on the LCD
 void LCD_TargetReachedMenu(); // Display a message on the LCD when the target is reached
