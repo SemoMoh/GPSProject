@@ -90,7 +90,7 @@ This Team project is part of the requiremtents of "Introduction to Embedded Syst
 
 
 <div align="center">
-    <a href="https://ibb.co/3B0hXmT"><img src="https://i.ibb.co/KF9yZx5/Screenshot-20230512-000221-Gallery.jpg" alt="Photo 2" height="400"></a>
+   <a href="https://ibb.co/GvWMVCm"><img src="https://i.ibb.co/4Z8Sj4k/Succeful-Function-plot.png" alt="Succeful-Function-plot" border="0"></a>
     <br>
     <sup style="font-size: 50px;">The walking distance on Google Maps is 150m</sup>
     <br>
